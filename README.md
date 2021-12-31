@@ -64,10 +64,9 @@ forecasts = await Mediator.Send<WeatherForecastQuery, IEnumerable<WeatherForecas
 This allows us to skip the controller all together.
 
 ## Setup
-There are no NuGet packages available yet, I will create them if this gets any traction.
 1. Add library references
-    - In your client/frontend project add a reference to `Valincius.RemoteMediatr.Client`
-    - In your server/backend project add a reference to `Valincius.RemoteMediatr.Server`
+    - In your client/frontend project add a nuget reference to `Valincius.RemoteMediatr.Client`
+    - In your server/backend project add a nuget reference to `Valincius.RemoteMediatr.Server`
 2. Add `builder.Services.AddRemoteMediatr(opt => { opt.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });` to your client startup
 3. Add `app.MapRemoteMediatrListener(typeof(DemoApp.Shared.Requests).Assembly);` to your server startup
     - `services.AddMediatR` should be called before this
