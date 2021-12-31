@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-	<Version>0.0.1</Version>
-	<Authors>John Valincius</Authors>
-	<Company>Valincius</Company>
-	<Product>RemoteMediatr</Product>
-	<Description>Allows you to send Mediatr requests over http.</Description>
-	<RepositoryUrl>https://github.com/valincius/RemoteMediatr</RepositoryUrl>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Version>0.0.2</Version>
+    <Authors>John Valincius</Authors>
+    <Company>Valincius</Company>
+    <Product>RemoteMediatr</Product>
+    <Description>Allows you to send Mediatr requests over http.</Description>
+    <RepositoryUrl>https://github.com/valincius/RemoteMediatr</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
