@@ -21,9 +21,11 @@ jobs:
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Server/Valincius.RemoteMediatr.Server.csproj
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
 
       - name: Publish Client Project
         id: publish_client_nuget
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Client/Valincius.RemoteMediatr.Client.csproj
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
