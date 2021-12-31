@@ -60,6 +60,8 @@ Lastly we just need to swap out our call in `FetchData.razor` with a call to the
 forecasts = await Mediator.Send<WeatherForecastQuery, IEnumerable<WeatherForecast>>(new WeatherForecastQuery());
 ```
 
+This allows us to skip the controller all together.
+
 ## Setup
 There are no NuGet packages available yet, I will create them if this gets any traction.
 1. Add library references
