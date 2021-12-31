@@ -2,7 +2,7 @@ using DemoApp.Shared;
 using MediatR;
 using static DemoApp.Shared.Requests;
 
-namespace DemoApp.Server.Controllers
+namespace DemoApp.Server.Handlers
 {
     public class WeatherForecastQueryHandler : IRequestHandler<WeatherForecastQuery, IEnumerable<WeatherForecast>>
     {
