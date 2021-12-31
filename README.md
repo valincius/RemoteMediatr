@@ -1,4 +1,8 @@
 # RemoteMediatr
+[![Valincius.RemoteMediatr.Client](https://img.shields.io/nuget/v/Valincius.RemoteMediatr.Client?label=Valincius.RemoteMediatr.Client)](https://www.nuget.org/packages/Valincius.RemoteMediatr.Client/)
+[![Valincius.RemoteMediatr.Server](https://img.shields.io/nuget/v/Valincius.RemoteMediatr.Server?label=Valincius.RemoteMediatr.Server)](https://www.nuget.org/packages/Valincius.RemoteMediatr.Server/)
+
+
 ### This project is a work in progress.
 
 This library is targeted at Blazor WebAssembly and will allow you to send Mediatr requests over http without needing to add any extra boilerplate/controllers.
@@ -57,7 +61,7 @@ public class WeatherForecastQueryHandler : IRequestHandler<WeatherForecastQuery,
 
 Lastly we just need to swap out our call in `FetchData.razor` with a call to the Mediator:
 ```c#
-// need to get explicit casting working so it can just be `Mediator.Send(new WeatherForecastQuery())`
+// need to get implicit casting working so it can just be `Mediator.Send(new WeatherForecastQuery())`
 forecasts = await Mediator.Send<WeatherForecastQuery, IEnumerable<WeatherForecast>>(new WeatherForecastQuery());
 ```
 
