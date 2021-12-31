@@ -23,6 +23,6 @@
 
     async Task SayHelloWorld()
     {
-        result = await Mediator.Send<HelloWorldQuery, string>(new HelloWorldQuery(name));
+        result = await Mediator.Send(new HelloWorldQuery(name));
     }
 }

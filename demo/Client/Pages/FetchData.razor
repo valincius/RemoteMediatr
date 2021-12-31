@@ -45,6 +45,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Mediator.Send<WeatherForecastQuery, IEnumerable<WeatherForecast>>(new WeatherForecastQuery());
+        forecasts = await Mediator.Send(new WeatherForecastQuery());
     }
 }

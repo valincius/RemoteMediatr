@@ -14,13 +14,13 @@ public class RemoteMediatrSender
         httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
     }
 
-    public async Task<TResponse> Send<TRequest, TResponse>(TRequest request)
-        where TRequest : IRequest<TResponse>
+    public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
     {
+        var requestType = request.GetType();
         var httpRequest = new RemoteMediatrRequest(
-            typeof(TRequest).FullName!,
+            requestType.FullName!,
             typeof(TResponse).FullName!,
-            JsonSerializer.Serialize(request)
+            JsonSerializer.Serialize(request, requestType)
         );
 
         var httpResponse = await httpClient.PostAsJsonAsync(Constants.RequestPath, httpRequest);
