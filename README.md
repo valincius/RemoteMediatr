@@ -57,6 +57,7 @@ public class WeatherForecastQueryHandler : IRequestHandler<WeatherForecastQuery,
 
 Lastly we just need to swap out our call in `FetchData.razor` with a call to the Mediator:
 ```c#
+// need to get explicit casting working so it can just be `Mediator.Send(new WeatherForecastQuery())`
 forecasts = await Mediator.Send<WeatherForecastQuery, IEnumerable<WeatherForecast>>(new WeatherForecastQuery());
 ```
 
