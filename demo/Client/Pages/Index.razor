@@ -1,0 +1,28 @@
+﻿@page "/"
+
+@using Valincius.RemoteMediatr.Client
+@using static DemoApp.Shared.Requests
+
+@inject RemoteMediatrSender Mediator
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, Remote Mediatr!</h1>
+
+<div>
+    <label>Enter your name:</label>
+    <input type="text" @bind-value="name" />
+    <button @onclick="SayHelloWorld">Send</button>
+    <br />
+    @result
+</div>
+
+@code {
+    string name = string.Empty;
+    string result = string.Empty;
+
+    async Task SayHelloWorld()
+    {
+        result = await Mediator.Send<HelloWorldQuery, string>(new HelloWorldQuery(name));
+    }
+}
