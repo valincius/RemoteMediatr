@@ -3,7 +3,7 @@
 [![Valincius.RemoteMediatr.Server](https://img.shields.io/nuget/v/Valincius.RemoteMediatr.Server?label=Valincius.RemoteMediatr.Server)](https://www.nuget.org/packages/Valincius.RemoteMediatr.Server/)
 
 
-### This project is a work in progress.
+### This project is a work in progress. And will likely recieve many API changes before `v1.0.0` please keep this in mind when using, there will be breaking changes often.
 
 This library is targeted at Blazor WebAssembly and will allow you to send Mediatr requests over http without needing to add any extra boilerplate/controllers.
 Requests from your frontend are sent to an endpoint on your server which handles all of the Mediatr logic without any controllers.
