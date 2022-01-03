@@ -1,0 +1,25 @@
+﻿@page "/"
+
+@inject IRemoteMediatr Mediator
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, RemoteMediatr!</h1>
+
+<div>
+    <label>Enter your name:</label>
+    <input type="text" @bind-value="name" />
+    <button @onclick="SayHelloWorld">Send</button>
+    <br />
+    @result
+</div>
+
+@code {
+    string name = string.Empty;
+    string result = string.Empty;
+
+    async Task SayHelloWorld()
+    {
+        result = await Mediator.Send(new HelloWorldQuery(name));
+    }
+}

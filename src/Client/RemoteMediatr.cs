@@ -17,7 +17,7 @@ public class RemoteMediatr : IRemoteMediatr
     {
         var requestType = request.GetType();
         var httpRequest = new RemoteMediatrRequest(
-            requestType.FullName!,
+            requestType.Name,
             JsonSerializer.Serialize(request, requestType)
         );
 
@@ -25,7 +25,6 @@ public class RemoteMediatr : IRemoteMediatr
         httpResponse.EnsureSuccessStatusCode();
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
-
         return response!;
     }
 }
