@@ -3,12 +3,12 @@ using Valincius.RemoteMediatr.Core;
 
 namespace Valincius.RemoteMediatr.Client;
 
-public static class RemoteMediatrClientServiceBuilder
+public static class RemoteMediatrServiceBuilder
 {
-    public static IServiceCollection AddRemoteMediatr(this IServiceCollection services, Action<HttpClient> httpClientOptions)
+    public static IServiceCollection AddRemoteMediatrClient(this IServiceCollection services, Action<HttpClient> httpClientOptions)
     {
         services.AddHttpClient(Constants.HttpClientName, httpClientOptions);
-        services.AddSingleton<RemoteMediatrSender>();
+        services.AddSingleton<IRemoteMediatr, RemoteMediatr>();
         return services;
     }
 }

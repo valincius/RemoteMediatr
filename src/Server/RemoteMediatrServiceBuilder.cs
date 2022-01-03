@@ -7,6 +7,7 @@ using System.Text.Json;
 using Valincius.RemoteMediatr.Core;
 
 namespace Valincius.RemoteMediatr.Server;
+
 public static class RemoteMediatrServiceBuilder
 {
     public static void MapRemoteMediatrListener(this WebApplication app, Assembly assembly)

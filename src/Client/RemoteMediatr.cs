@@ -5,11 +5,11 @@ using Valincius.RemoteMediatr.Core;
 
 namespace Valincius.RemoteMediatr.Client;
 
-public class RemoteMediatrSender
+public class RemoteMediatr : IRemoteMediatr
 {
     private readonly HttpClient httpClient;
 
-    public RemoteMediatrSender(IHttpClientFactory httpClientFactory)
+    public RemoteMediatr(IHttpClientFactory httpClientFactory)
     {
         httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
     }

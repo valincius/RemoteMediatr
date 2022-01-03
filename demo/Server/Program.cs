@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Valincius.RemoteMediatr.Server;
 using MediatR;
 using DemoApp.Server.Handlers;
+using Valincius.RemoteMediatr.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
