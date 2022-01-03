@@ -25,7 +25,6 @@ public class RemoteMediatr : IRemoteMediatr
         httpResponse.EnsureSuccessStatusCode();
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
-
         return response!;
     }
 }
