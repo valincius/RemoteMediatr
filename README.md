@@ -67,6 +67,10 @@ forecasts = await Mediator.Send(new WeatherForecastQuery());
 
 This allows us to skip the controller all together.
 
+## Authorization
+Authorization works the exact same way as it does with controllers & actions.
+You can apply the `Authorize` attribute to the request definition (`IClientRequest`) and it will work the same as it does for controllers/actions.
+
 ## Setup
 1. Add library references
     - In your client/frontend project add a nuget reference to `RemoteMediatr.Client`
