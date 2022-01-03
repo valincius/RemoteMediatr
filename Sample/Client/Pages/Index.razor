@@ -1,9 +1,25 @@
 ﻿@page "/"
 
+@inject IRemoteMediatr Mediator
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, RemoteMediatr!</h1>
 
-Welcome to your new app.
+<div>
+    <label>Enter your name:</label>
+    <input type="text" @bind-value="name" />
+    <button @onclick="SayHelloWorld">Send</button>
+    <br />
+    @result
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    string name = string.Empty;
+    string result = string.Empty;
+
+    async Task SayHelloWorld()
+    {
+        result = await Mediator.Send(new HelloWorldQuery(name));
+    }
+}
