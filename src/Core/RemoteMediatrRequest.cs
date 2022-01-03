@@ -1,3 +1,3 @@
 ﻿namespace Valincius.RemoteMediatr.Core;
 
-public record RemoteMediatrRequest(string Name, string ReturnType, string Request);
+public record RemoteMediatrRequest(string Name, string Request);

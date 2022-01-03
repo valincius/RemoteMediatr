@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Valincius.RemoteMediatr.Core;
 
 namespace Valincius.RemoteMediatr.Client;
 
-internal interface IRemoteMediatr
+public interface IRemoteMediatr
 {
-    Task<TResponse> Send<TResponse>(IRequest<TResponse> request);
+    Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request);
 }
