@@ -5,9 +5,9 @@ namespace RemoteMediatr.Client;
 
 public static class RemoteMediatrServiceBuilder
 {
-    public static IServiceCollection AddRemoteMediatrClient(this IServiceCollection services, Action<HttpClient> httpClientOptions, Action<IHttpClientBuilder>? httpClientBuilder = null)
+    public static IServiceCollection AddRemoteMediatrClient(this IServiceCollection services, Action<IHttpClientBuilder>? httpClientBuilder = null)
     {
-        var httpClient = services.AddHttpClient(Constants.HttpClientName, httpClientOptions);
+        var httpClient = services.AddHttpClient(Constants.HttpClientName);
         httpClientBuilder?.Invoke(httpClient);
 
         services.AddSingleton<IRemoteMediatr, RemoteMediatr>();
