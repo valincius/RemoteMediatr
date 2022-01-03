@@ -1,6 +1,6 @@
 # RemoteMediatr
-[![Valincius.RemoteMediatr.Client](https://img.shields.io/nuget/v/Valincius.RemoteMediatr.Client?label=Valincius.RemoteMediatr.Client)](https://www.nuget.org/packages/Valincius.RemoteMediatr.Client/)
-[![Valincius.RemoteMediatr.Server](https://img.shields.io/nuget/v/Valincius.RemoteMediatr.Server?label=Valincius.RemoteMediatr.Server)](https://www.nuget.org/packages/Valincius.RemoteMediatr.Server/)
+[![RemoteMediatr.Client](https://img.shields.io/nuget/v/RemoteMediatr.Client?label=RemoteMediatr.Client)](https://www.nuget.org/packages/RemoteMediatr.Client/)
+[![RemoteMediatr.Server](https://img.shields.io/nuget/v/RemoteMediatr.Server?label=RemoteMediatr.Server)](https://www.nuget.org/packages/RemoteMediatr.Server/)
 
 
 ### This project is a work in progress.
@@ -33,8 +33,9 @@ forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 ### We can swap this out to use the Mediatr/Request pattern really easily.
 First we define our request:
 ```c#
-public record WeatherForecastQuery() : IRequest<IEnumerable<WeatherForecast>>;
+public record WeatherForecastQuery() : IClientRequest<IEnumerable<WeatherForecast>>;
 ```
+- Here we use `IClientRequest` instead of `IRequest` this is to help distinguish which requests can be called from the client.
 
 Then we setup a handler for this request:
 ```c#
@@ -68,8 +69,8 @@ This allows us to skip the controller all together.
 
 ## Setup
 1. Add library references
-    - In your client/frontend project add a nuget reference to `Valincius.RemoteMediatr.Client`
-    - In your server/backend project add a nuget reference to `Valincius.RemoteMediatr.Server`
+    - In your client/frontend project add a nuget reference to `RemoteMediatr.Client`
+    - In your server/backend project add a nuget reference to `RemoteMediatr.Server`
 2. Add `builder.Services.AddRemoteMediatr(opt => { opt.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });` to your client startup
 3. Add `app.MapRemoteMediatrListener(typeof(DemoApp.Shared.Requests).Assembly);` to your server startup
     - `services.AddMediatR` should be called before this

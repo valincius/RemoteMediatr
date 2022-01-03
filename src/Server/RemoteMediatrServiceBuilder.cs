@@ -17,7 +17,7 @@ public static class RemoteMediatrServiceBuilder
     }
 
     private static Func<RemoteMediatrRequest, Task<object>> HandleRequest(Assembly assembly, IMediator mediator) =>
-        async (req) =>
+        async req =>
         {
             var type = assembly.GetType(req.Name);
 
