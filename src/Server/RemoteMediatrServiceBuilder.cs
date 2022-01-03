@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using RemoteMediatr.Core;
 using System.Reflection;
 using System.Text.Json;
-using Valincius.RemoteMediatr.Core;
 
-namespace Valincius.RemoteMediatr.Server;
+namespace RemoteMediatr.Server;
 
 public static class RemoteMediatrServiceBuilder
 {
@@ -17,7 +17,7 @@ public static class RemoteMediatrServiceBuilder
     }
 
     private static Func<RemoteMediatrRequest, Task<object>> HandleRequest(Assembly assembly, IMediator mediator) =>
-        async (RemoteMediatrRequest req) =>
+        async (req) =>
         {
             var type = assembly.GetType(req.Name);
 

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Client\Valincius.RemoteMediatr.Client.csproj" />
+    <ProjectReference Include="..\..\src\Client\RemoteMediatr.Client.csproj" />
     <ProjectReference Include="..\Shared\DemoApp.Shared.csproj" />
   </ItemGroup>
 

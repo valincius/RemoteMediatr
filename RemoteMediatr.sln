@@ -5,13 +5,13 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8C8887FC-28CF-4AA7-8283-E472D5D300CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Valincius.RemoteMediatr.Client", "src\Client\Valincius.RemoteMediatr.Client.csproj", "{433670A0-2211-4E2A-981B-F4B47471F521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteMediatr.Client", "src\Client\RemoteMediatr.Client.csproj", "{433670A0-2211-4E2A-981B-F4B47471F521}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Valincius.RemoteMediatr.Core", "src\Core\Valincius.RemoteMediatr.Core.csproj", "{4FF49974-5939-4AF9-AD3C-9092D31A344B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteMediatr.Core", "src\Core\RemoteMediatr.Core.csproj", "{4FF49974-5939-4AF9-AD3C-9092D31A344B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Valincius.RemoteMediatr.Server", "src\Server\Valincius.RemoteMediatr.Server.csproj", "{5A2BB250-E21D-4D3F-9461-42F4FDD52CD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteMediatr.Server", "src\Server\RemoteMediatr.Server.csproj", "{5A2BB250-E21D-4D3F-9461-42F4FDD52CD5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{8EE545AA-C639-405A-B7A7-655046307FE1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{8EE545AA-C639-405A-B7A7-655046307FE1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Client", "demo\Client\DemoApp.Client.csproj", "{FD890ED4-5E52-43DC-B5A3-6C4603E3121A}"
 EndProject

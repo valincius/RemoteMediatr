@@ -1,4 +1,4 @@
-﻿namespace Valincius.RemoteMediatr.Core;
+﻿namespace RemoteMediatr.Core;
 
 public class Constants
 {

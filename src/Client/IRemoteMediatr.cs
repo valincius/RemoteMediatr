@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Valincius.RemoteMediatr.Core;
+using RemoteMediatr.Core;
 
-namespace Valincius.RemoteMediatr.Client;
+namespace RemoteMediatr.Client;
 
 public interface IRemoteMediatr
 {

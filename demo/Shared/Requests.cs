@@ -1,4 +1,4 @@
-﻿using Valincius.RemoteMediatr.Core;
+﻿using RemoteMediatr.Core;
 
 namespace DemoApp.Shared
 {

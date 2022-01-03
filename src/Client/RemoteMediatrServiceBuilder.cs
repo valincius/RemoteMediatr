@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Valincius.RemoteMediatr.Core;
+using RemoteMediatr.Core;
 
-namespace Valincius.RemoteMediatr.Client;
+namespace RemoteMediatr.Client;
 
 public static class RemoteMediatrServiceBuilder
 {

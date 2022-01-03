@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Server\Valincius.RemoteMediatr.Server.csproj" />
+    <ProjectReference Include="..\..\src\Server\RemoteMediatr.Server.csproj" />
     <ProjectReference Include="..\Client\DemoApp.Client.csproj" />
     <ProjectReference Include="..\Shared\DemoApp.Shared.csproj" />
   </ItemGroup>

@@ -1,8 +1,8 @@
-﻿using System.Net.Http.Json;
+﻿using RemoteMediatr.Core;
+using System.Net.Http.Json;
 using System.Text.Json;
-using Valincius.RemoteMediatr.Core;
 
-namespace Valincius.RemoteMediatr.Client;
+namespace RemoteMediatr.Client;
 
 public class RemoteMediatr : IRemoteMediatr
 {

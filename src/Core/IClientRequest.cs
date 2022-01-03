@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Valincius.RemoteMediatr.Core;
+namespace RemoteMediatr.Core;
 
 public interface IClientRequest<TResponse> : IRequest<TResponse>
 {

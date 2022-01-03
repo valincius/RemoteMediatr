@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  
-    <Version>0.0.2</Version>
+
+	<Version>0.0.3</Version>
     <Authors>John Valincius</Authors>
     <Company>Valincius</Company>
     <Product>RemoteMediatr</Product>
@@ -15,15 +15,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Valincius.RemoteMediatr.Core.csproj" />
+    <ProjectReference Include="..\Core\RemoteMediatr.Core.csproj" />
   </ItemGroup>
 
 </Project>

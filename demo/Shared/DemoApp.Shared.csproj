@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\Valincius.RemoteMediatr.Core.csproj" />
+    <ProjectReference Include="..\..\src\Core\RemoteMediatr.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
