@@ -17,7 +17,7 @@ public class RemoteMediatr : IRemoteMediatr
     {
         var requestType = request.GetType();
         var httpRequest = new RemoteMediatrRequest(
-            requestType.FullName!,
+            requestType.Name,
             JsonSerializer.Serialize(request, requestType)
         );
 
