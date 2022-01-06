@@ -18,13 +18,13 @@ public static class RemoteMediatrServiceBuilder
 {
     public static void MapRemoteMediatrListener(this WebApplication app, Assembly assembly)
     {
-        var mediator = app.Services.GetRequiredService<IMediator>();
+        var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
         var policyProvider = app.Services.GetService<IAuthorizationPolicyProvider>();
-
-        app.MapPost(Constants.RequestPath, HandleRequest(assembly, mediator, policyProvider));
+        
+        app.MapPost(Constants.RequestPath, HandleRequest(assembly, scopeFactory, policyProvider));
     }
 
-    private static Func<RemoteMediatrRequest, HttpContext, Task<IResult>> HandleRequest(Assembly assembly, IMediator mediator, IAuthorizationPolicyProvider? policyProvider) =>
+    private static Func<RemoteMediatrRequest, HttpContext, Task<IResult>> HandleRequest(Assembly assembly, IServiceScopeFactory scopeFactory, IAuthorizationPolicyProvider? policyProvider) =>
         async (req, ctx) =>
         {
             var type = (from t in assembly.DefinedTypes
@@ -49,7 +49,9 @@ public static class RemoteMediatrServiceBuilder
             if (obj is null)
                 return Results.BadRequest($"Could not convert payload to {type.Name}");
 
-            return Results.Ok(await mediator.Send(obj));
+            using var scope = scopeFactory.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService(typeof(IMediator)) as IMediator;
+            return Results.Ok(await mediator!.Send(obj));
         };
 
     private static async Task<IActionResult?> AuthorizeRequest(IAuthorizationPolicyProvider policyProvider, HttpContext httpContext, Type request)
