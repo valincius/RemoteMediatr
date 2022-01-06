@@ -15,6 +15,13 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+          
+      - name: Publish Core Project
+        id: publish_core_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Core/RemoteMediatr.Core.csproj
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
 
       - name: Publish Server Project
         id: publish_server_nuget
