@@ -18,7 +18,7 @@ namespace Sample.Shared
 
         public class UploadFileCommand : IClientRequest<string>
         {
-            [JsonIgnore] public Stream File { get; set; }
+            public Stream File { get; set; }
 
             public UploadFileCommand(Stream file)
             {

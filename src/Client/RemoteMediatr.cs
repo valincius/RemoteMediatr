@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RemoteMediatr.Client;
 
@@ -18,9 +19,12 @@ public class RemoteMediatr : IRemoteMediatr
     {
         var requestType = request.GetType();
 
+        var jsonOptions = new JsonSerializerOptions();
+        jsonOptions.Converters.Add(new StreamJsonConverter());
+
         using var content = new MultipartFormDataContent
         {
-            { new StringContent(JsonSerializer.Serialize(request, requestType)), "Body" }
+            { new StringContent(JsonSerializer.Serialize(request, requestType, jsonOptions)) }
         };
 
         var streamProperties = requestType.GetProperties()
