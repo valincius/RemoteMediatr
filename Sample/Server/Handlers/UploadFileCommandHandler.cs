@@ -7,9 +7,11 @@ namespace Sample.Server.Handlers
     {
         public async Task<string> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            using var streamReader = new StreamReader(request.File);
-            var content = await streamReader.ReadToEndAsync();
-            return content;
+            var filePath = Path.Combine(".", Path.GetRandomFileName());
+            using var stream = File.Create(filePath);
+            await request.File.CopyToAsync(stream, cancellationToken);
+
+            return "Done!";
         }
     }
 }

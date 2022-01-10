@@ -47,7 +47,7 @@ public static class RemoteMediatrServiceBuilder
                     return Results.Unauthorized();
             }
 
-            var boundary = MultipartRequestHelper.GetBoundary(MediaTypeHeaderValue.Parse(ctx.Request.ContentType), 16384);
+            var boundary = MultipartRequestHelper.GetBoundary(MediaTypeHeaderValue.Parse(ctx.Request.ContentType));
             var reader = new MultipartReader(boundary, ctx.Request.Body);
             var section = await reader.ReadNextSectionAsync();
             
@@ -64,7 +64,7 @@ public static class RemoteMediatrServiceBuilder
                 if (file?.FileStream is not null)
                 {
                     var streamCopy = new MemoryStream();
-                    file.FileStream.CopyTo(streamCopy);
+                    await file.FileStream.CopyToAsync(streamCopy);
                     streamCopy.Seek(0, SeekOrigin.Begin);
                     uploadedFiles.Add(file.Name, streamCopy);
                 }

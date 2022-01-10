@@ -12,8 +12,6 @@
 {
     <div>
         @result
-        @*Selected: @result.FileName
-        @result.Content*@
     </div>
 }
 
@@ -25,7 +23,7 @@
         var file = e.GetMultipleFiles(1).FirstOrDefault();
         if (file is not null)
         {
-            using var stream = file.OpenReadStream();
+            using var stream = file.OpenReadStream(100 * 1024 * 1024);
             result = await Mediator.Send(new UploadFileCommand(stream));
         }
     }
