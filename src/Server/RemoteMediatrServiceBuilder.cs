@@ -21,22 +21,22 @@ public static class RemoteMediatrServiceBuilder
         var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
         var policyProvider = app.Services.GetService<IAuthorizationPolicyProvider>();
         
-        app.MapPost(Constants.RequestPath, HandleRequest(assembly, scopeFactory, policyProvider));
+        app.MapPost($"{Constants.RequestPath}/{{requestType}}", HandleRequest(assembly, scopeFactory, policyProvider));
     }
 
-    private static Func<RemoteMediatrRequest, HttpContext, Task<IResult>> HandleRequest(Assembly assembly, IServiceScopeFactory scopeFactory, IAuthorizationPolicyProvider? policyProvider) =>
-        async (req, ctx) =>
+    private static Func<string, HttpContext, Task<IResult>> HandleRequest(Assembly assembly, IServiceScopeFactory scopeFactory, IAuthorizationPolicyProvider? policyProvider) =>
+        async (requestType, ctx) =>
         {
             var type = (from t in assembly.DefinedTypes
                         from i in t.GetInterfaces()
-                        where t.Name == req.Name
+                        where t.Name == requestType
                         where i.IsGenericType
                         where i.GetGenericTypeDefinition() == typeof(IClientRequest<>)
                         select t.AsType())
                         .FirstOrDefault();
 
             if (type is null)
-                return Results.BadRequest($"Type {req.Name} was not found");
+                return Results.BadRequest($"Type {requestType} was not found");
 
             if (policyProvider is not null)
             {
@@ -45,9 +45,12 @@ public static class RemoteMediatrServiceBuilder
                     return Results.Unauthorized();
             }
 
-            var obj = JsonSerializer.Deserialize(req.Request, type);
+            using var stream = new StreamReader(ctx.Request.Body);
+            string body = await stream.ReadToEndAsync();
+            var obj = JsonSerializer.Deserialize(body, type);
+
             if (obj is null)
-                return Results.BadRequest($"Could not convert payload to {type.Name}");
+                return Results.BadRequest($"Could not convert payload to {requestType}");
 
             using var scope = scopeFactory.CreateScope();
             var mediator = scope.ServiceProvider.GetRequiredService(typeof(IMediator)) as IMediator;
