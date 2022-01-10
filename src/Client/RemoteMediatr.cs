@@ -1,5 +1,6 @@
 ﻿using RemoteMediatr.Core;
 using System.Net.Http.Json;
+using System.Reflection;
 using System.Text.Json;
 
 namespace RemoteMediatr.Client;
@@ -16,8 +17,17 @@ public class RemoteMediatr : IRemoteMediatr
     public async Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request)
     {
         var requestType = request.GetType();
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
-        var content = JsonContent.Create(request, requestType, options: options);
+
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(JsonSerializer.Serialize(request, requestType)), "Body" }
+        };
+
+        var streamProperties = requestType.GetProperties()
+            .Where(x => x.PropertyType.IsAssignableFrom(typeof(Stream)));
+        foreach (var prop in streamProperties)
+            content.Add(new StreamContent((prop.GetValue(request) as Stream)!), prop.Name, prop.Name);
+
         var httpResponse = await httpClient.PostAsync($"{Constants.RequestPath}/{requestType.Name}", content);
         httpResponse.EnsureSuccessStatusCode();
 

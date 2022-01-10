@@ -1,0 +1,32 @@
+﻿@page "/upload-file"
+
+@inject IRemoteMediatr Mediator
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, RemoteMediatr!</h1>
+
+<InputFile OnChange="LoadFile" />
+
+@if (result is not null)
+{
+    <div>
+        @result
+        @*Selected: @result.FileName
+        @result.Content*@
+    </div>
+}
+
+@code {
+    string? result = null;
+
+    async Task LoadFile(InputFileChangeEventArgs e)
+    {
+        var file = e.GetMultipleFiles(1).FirstOrDefault();
+        if (file is not null)
+        {
+            using var stream = file.OpenReadStream();
+            result = await Mediator.Send(new UploadFileCommand(stream));
+        }
+    }
+}

@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using RemoteMediatr.Core;
 using System.Reflection;
 using System.Text.Json;
@@ -45,16 +47,47 @@ public static class RemoteMediatrServiceBuilder
                     return Results.Unauthorized();
             }
 
-            using var stream = new StreamReader(ctx.Request.Body);
-            string body = await stream.ReadToEndAsync();
+            var boundary = MultipartRequestHelper.GetBoundary(MediaTypeHeaderValue.Parse(ctx.Request.ContentType), 16384);
+            var reader = new MultipartReader(boundary, ctx.Request.Body);
+            var section = await reader.ReadNextSectionAsync();
+            
+            var body = await section!.ReadAsStringAsync();
             var obj = JsonSerializer.Deserialize(body, type);
-
             if (obj is null)
-                return Results.BadRequest($"Could not convert payload to {requestType}");
+                return Results.BadRequest($"Could not convert body to {requestType}");
+
+            Dictionary<string, Stream> uploadedFiles = new();
+            section = await reader.ReadNextSectionAsync();
+            while (section is not null)
+            {
+                var file = section.AsFileSection();
+                if (file?.FileStream is not null)
+                {
+                    var streamCopy = new MemoryStream();
+                    file.FileStream.CopyTo(streamCopy);
+                    streamCopy.Seek(0, SeekOrigin.Begin);
+                    uploadedFiles.Add(file.Name, streamCopy);
+                }
+
+                section = await reader.ReadNextSectionAsync();
+            }
+
+            var streamProperties = type.GetProperties().Where(x => x.PropertyType.IsAssignableFrom(typeof(Stream)));
+            foreach (var prop in streamProperties)
+            {
+                // throw if stream is non-nullable but is null
+                if (uploadedFiles.TryGetValue(prop.Name, out var stream))
+                    prop.SetValue(obj, stream);
+            }
 
             using var scope = scopeFactory.CreateScope();
             var mediator = scope.ServiceProvider.GetRequiredService(typeof(IMediator)) as IMediator;
-            return Results.Ok(await mediator!.Send(obj));
+            var result = await mediator!.Send(obj);
+
+            foreach (var file in uploadedFiles)
+                file.Value.Dispose();
+
+            return Results.Ok(result);
         };
 
     private static async Task<IActionResult?> AuthorizeRequest(IAuthorizationPolicyProvider policyProvider, HttpContext httpContext, Type request)
