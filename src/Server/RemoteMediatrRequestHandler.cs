@@ -42,12 +42,9 @@ internal class RemoteMediatrRequestHandler
         if (type is null)
             return Results.BadRequest($"Type {requestType} was not found");
 
-        if (_authorizationPolicyProvider is not null)
-        {
-            var authResult = await AuthorizeRequest(_authorizationPolicyProvider, context, type);
-            if (authResult is not null)
-                return Results.Unauthorized();
-        }
+        var authResult = await AuthorizeRequest(context, type);
+        if (authResult is not null)
+            return Results.Unauthorized();
 
         using var stream = new StreamReader(context.Request.Body);
         string body = await stream.ReadToEndAsync();
@@ -69,13 +66,16 @@ internal class RemoteMediatrRequestHandler
         }
     }
 
-    private async Task<IActionResult?> AuthorizeRequest(IAuthorizationPolicyProvider policyProvider, HttpContext httpContext, Type request)
+    private async Task<IActionResult?> AuthorizeRequest(HttpContext httpContext, Type request)
     {
+        if (_authorizationPolicyProvider is null)
+            return null;
+
         var authData = request.GetCustomAttributes<AuthorizeAttribute>();
         if (!authData.Any())
             return null;
 
-        var authorizeFilter = new AuthorizeFilter(policyProvider, authData);
+        var authorizeFilter = new AuthorizeFilter(_authorizationPolicyProvider, authData);
         var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
         var authorizationFilterContext = new AuthorizationFilterContext(actionContext, new[] { authorizeFilter });
 
