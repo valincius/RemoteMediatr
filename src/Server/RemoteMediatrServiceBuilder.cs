@@ -9,11 +9,18 @@ namespace RemoteMediatr.Server;
 
 public static class RemoteMediatrServiceBuilder
 {
-    public static void MapRemoteMediatrListener(this WebApplication app, Assembly assembly)
+    public static void MapRemoteMediatrListener(
+        this WebApplication app,
+        Assembly assembly,
+        Action<RemoteMediatrOptions>? optionsBuilder = null)
     {
         var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
         var policyProvider = app.Services.GetService<IAuthorizationPolicyProvider>();
-        var requestHandler = new RemoteMediatrRequestHandler(assembly, scopeFactory, policyProvider);
+
+        var options = new RemoteMediatrOptions();
+        optionsBuilder?.Invoke(options);
+
+        var requestHandler = new RemoteMediatrRequestHandler(assembly, scopeFactory, policyProvider, options);
 
         app.MapPost($"{Constants.RequestPath}/{{requestType}}", requestHandler.HandleRequest);
     }

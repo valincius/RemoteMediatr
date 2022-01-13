@@ -1,4 +1,5 @@
-﻿using RemoteMediatr.Core;
+﻿using MediatR;
+using RemoteMediatr.Core;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -27,6 +28,8 @@ public class RemoteMediatr : IRemoteMediatr
 
             throw new ApplicationException(httpResponse.ReasonPhrase);
         }
+
+        // fix when returning Unit
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
         return response!;
