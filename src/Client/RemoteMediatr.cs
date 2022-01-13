@@ -16,12 +16,9 @@ public class RemoteMediatr : IRemoteMediatr
     public async Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request)
     {
         var requestType = request.GetType();
-        var httpRequest = new RemoteMediatrRequest(
-            requestType.Name,
-            JsonSerializer.Serialize(request, requestType)
-        );
-
-        var httpResponse = await httpClient.PostAsJsonAsync(Constants.RequestPath, httpRequest);
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
+        var content = JsonContent.Create(request, requestType, options: options);
+        var httpResponse = await httpClient.PostAsync($"{Constants.RequestPath}/{requestType.Name}", content);
         httpResponse.EnsureSuccessStatusCode();
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
