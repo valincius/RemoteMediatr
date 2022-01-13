@@ -22,6 +22,6 @@ public static class RemoteMediatrServiceBuilder
         var policyProvider = app.Services.GetService<IAuthorizationPolicyProvider>();
         var requestHandler = new RemoteMediatrRequestHandler(assembly, scopeFactory, policyProvider);
 
-        app.MapPost(Constants.RequestPath, requestHandler.HandleRequest);
+        app.MapPost($"{Constants.RequestPath}/{{requestType}}", requestHandler.HandleRequest);
     }
 }

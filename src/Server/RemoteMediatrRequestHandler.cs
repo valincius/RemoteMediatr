@@ -58,6 +58,9 @@ internal class RemoteMediatrRequestHandler
         try
         {
             var result = await mediator!.Send(obj);
+            if (result is Unit)
+                return Results.NoContent();
+
             return Results.Ok(result);
         }
         catch (Exception ex)
