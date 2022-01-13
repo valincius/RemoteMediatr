@@ -1,15 +1,12 @@
 ﻿using MediatR;
-using RemoteMediatr.Core;
 using static Sample.Shared.Requests;
 
-namespace Sample.Server.Handlers
+namespace Sample.Server.Handlers;
+public class ConsoleLogCommandHandler : IRequestHandler<ConsoleLogCommand>
 {
-    public class ConsoleLogCommandHandler : IRequestHandler<ConsoleLogCommand>
+    public Task<Unit> Handle(ConsoleLogCommand request, CancellationToken cancellationToken)
     {
-        public Task<Unit> Handle(ConsoleLogCommand request, CancellationToken cancellationToken)
-        {
-            Console.WriteLine(request.Text);
-            return Unit.Task;
-        }
+        Console.WriteLine(request.Text);
+        return Unit.Task;
     }
 }
