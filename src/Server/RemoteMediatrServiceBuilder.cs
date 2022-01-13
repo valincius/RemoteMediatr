@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using RemoteMediatr.Core;
 using System.Reflection;
-using System.Text.Json;
 
 namespace RemoteMediatr.Server;
 
