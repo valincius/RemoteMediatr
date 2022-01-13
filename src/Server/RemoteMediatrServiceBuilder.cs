@@ -20,8 +20,8 @@ public static class RemoteMediatrServiceBuilder
     {
         var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
         var policyProvider = app.Services.GetService<IAuthorizationPolicyProvider>();
-        
         var requestHandler = new RemoteMediatrRequestHandler(assembly, scopeFactory, policyProvider);
+
         app.MapPost(Constants.RequestPath, requestHandler.HandleRequest);
     }
 }
