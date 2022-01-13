@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RemoteMediatr.Core;
 using static Sample.Shared.Requests;
 
 namespace Sample.Server.Handlers

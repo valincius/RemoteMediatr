@@ -6,11 +6,11 @@ namespace RemoteMediatr.Client;
 
 public class RemoteMediatr : IRemoteMediatr
 {
-    private readonly HttpClient httpClient;
+    private readonly HttpClient _httpClient;
 
     public RemoteMediatr(IHttpClientFactory httpClientFactory)
     {
-        httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
+        _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
     }
 
     public async Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request)
@@ -18,8 +18,15 @@ public class RemoteMediatr : IRemoteMediatr
         var requestType = request.GetType();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
         var content = JsonContent.Create(request, requestType, options: options);
-        var httpResponse = await httpClient.PostAsync($"{Constants.RequestPath}/{requestType.Name}", content);
-        httpResponse.EnsureSuccessStatusCode();
+        var httpResponse = await _httpClient.PostAsync($"{Constants.RequestPath}/{requestType.Name}", content);
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemInfo>();
+            if (problem is not null)
+                throw new ClientRequestException(problem);
+
+            throw new ApplicationException("Something went wrong");
+        }
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
         return response!;

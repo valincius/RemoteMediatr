@@ -13,9 +13,9 @@
 @code {
     private int currentCount = 0;
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
         currentCount++;
-        Mediator.Send(new ConsoleLogCommand($"Counter = {currentCount}"));
+        await Mediator.Send(new ConsoleLogCommand($"Counter = {currentCount}"));
     }
 }

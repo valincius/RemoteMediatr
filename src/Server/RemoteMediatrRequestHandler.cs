@@ -65,7 +65,10 @@ internal class RemoteMediatrRequestHandler
         }
         catch (Exception ex)
         {
-            return Results.Problem(ex.Message);
+            if (ex is RequestException rex)
+                return Results.BadRequest(rex.ProblemInfo);
+
+            return Results.Problem("An error has occured", statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 
