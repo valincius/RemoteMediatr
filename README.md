@@ -67,6 +67,10 @@ forecasts = await Mediator.Send(new WeatherForecastQuery());
 
 This allows us to skip the controller all together.
 
+## Exceptions
+There is a custom exception type `ClientRequestException` that you can throw from your handler that will be caught on the client, you can use this for returning any sorts of errors.
+Any other exceptions will return a 500 error and will be caught as an `ApplicationException`.
+
 ## Authorization
 Authorization works the exact same way as it does with controllers & actions.
 You can apply the `Authorize` attribute to the request definition (`IClientRequest`) and it will work the same as it does for controllers/actions.

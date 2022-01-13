@@ -21,11 +21,11 @@ public class RemoteMediatr : IRemoteMediatr
         var httpResponse = await _httpClient.PostAsync($"{Constants.RequestPath}/{requestType.Name}", content);
         if (!httpResponse.IsSuccessStatusCode)
         {
-            var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemInfo>();
-            if (problem is not null)
-                throw new ClientRequestException(problem);
+            var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemInfoResponse?>();
+            if (problem?.ProblemInfo is not null)
+                throw new ClientRequestException(problem.ProblemInfo);
 
-            throw new ApplicationException("Something went wrong");
+            throw new ApplicationException(httpResponse.ReasonPhrase);
         }
 
         var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
