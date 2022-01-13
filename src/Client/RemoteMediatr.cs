@@ -14,7 +14,7 @@ public class RemoteMediatr : IRemoteMediatr
         _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
     }
 
-    public async Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request)
+    private async Task<HttpContent> SendRequest<T>(IClientRequest<T> request)
     {
         var requestType = request.GetType();
         var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
@@ -29,9 +29,18 @@ public class RemoteMediatr : IRemoteMediatr
             throw new ApplicationException(httpResponse.ReasonPhrase);
         }
 
-        // fix when returning Unit
+        return httpResponse.Content;
+    }
 
-        var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>();
-        return response!;
+    public async Task Send(IClientRequest request)
+    {
+        await SendRequest(request);
+    }
+
+    public async Task<TResponse> Send<TResponse>(IClientRequest<TResponse> request)
+    {
+        var response = await SendRequest(request);
+        var result = await response.ReadFromJsonAsync<TResponse>();
+        return result!;
     }
 }

@@ -15,4 +15,6 @@ builder.Services.AddRemoteMediatrClient(httpClient => {
 
 builder.Services.AddApiAuthorization();
 
+builder.Logging.SetMinimumLevel(LogLevel.Warning);
+
 await builder.Build().RunAsync();
