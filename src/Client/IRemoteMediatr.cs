@@ -1,5 +1,4 @@
-﻿using MediatR;
-using RemoteMediatr.Core;
+﻿using RemoteMediatr.Core;
 
 namespace RemoteMediatr.Client;
 
