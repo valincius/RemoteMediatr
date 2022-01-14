@@ -74,6 +74,7 @@ Any other exceptions will return a 500 error and will be rethrown on the client 
 ## Authorization
 Authorization works the exact same way as it does with controllers & actions.
 You can apply the `Authorize` attribute to the request definition (`IClientRequest`) and it will work the same as it does for controllers/actions.
+You can also set `PerformAuthorizationByDefault` to `true` and this will perform auth on all requests that do not have `AllowAnonymous` attribute.
 
 ## Setup
 1. Add library references

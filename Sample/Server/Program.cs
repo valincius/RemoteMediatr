@@ -55,7 +55,7 @@ app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRemoteMediatrListener(typeof(Sample.Shared.Requests).Assembly);
+app.MapRemoteMediatrListener(typeof(Sample.Shared.Requests).Assembly, opt => opt.PerformAuthorizationByDefault = true);
 
 app.MapRazorPages();
 app.MapControllers();

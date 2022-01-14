@@ -17,15 +17,18 @@ internal class RemoteMediatrRequestHandler
     private readonly Assembly _assembly;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly IAuthorizationPolicyProvider? _authorizationPolicyProvider;
+    private readonly RemoteMediatrOptions _options;
 
     public RemoteMediatrRequestHandler(
         Assembly assembly,
         IServiceScopeFactory serviceScopeFactory,
-        IAuthorizationPolicyProvider? authorizationPolicyProvider)
+        IAuthorizationPolicyProvider? authorizationPolicyProvider,
+        RemoteMediatrOptions options)
     {
         _assembly = assembly;
         _serviceScopeFactory = serviceScopeFactory;
         _authorizationPolicyProvider = authorizationPolicyProvider;
+        _options = options;
     }
 
     public async Task<IResult> HandleRequest(string requestType, HttpContext context)
@@ -77,7 +80,14 @@ internal class RemoteMediatrRequestHandler
         if (_authorizationPolicyProvider is null)
             return null;
 
-        var authData = request.GetCustomAttributes<AuthorizeAttribute>();
+        if (request.GetCustomAttribute<AllowAnonymousAttribute>() is not null)
+            return null;
+
+        var authData = request.GetCustomAttributes<AuthorizeAttribute>().ToList();
+
+        if (_options.PerformAuthorizationByDefault)
+            authData.Add(new AuthorizeAttribute());
+
         if (!authData.Any())
             return null;
 
