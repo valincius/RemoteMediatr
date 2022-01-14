@@ -9,7 +9,7 @@ namespace Sample.Server.Handlers
         public Task<string> Handle(HelloWorldQuery request, CancellationToken cancellationToken)
         {
             if (request.Name == "John")
-                throw new ClientRequestException("You are not allowed to use this API", new List<string> { $"{nameof(request.Name)} cannot be 'John'" });
+                throw new ClientRequestException("AccessError", "You are not allowed to use this API", new List<string> { $"{nameof(request.Name)} cannot be 'John'" });
 
             if (request.Name == "xxx")
                 throw new InvalidOperationException();

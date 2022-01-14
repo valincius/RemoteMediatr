@@ -27,7 +27,7 @@
         }
         catch (ClientRequestException ex)
         {
-            result = $"{ex.ProblemInfo.Title} => {string.Join(", ", ex.ProblemInfo.Errors)}";
+            result = $"{ex.ProblemInfo.Type}: {ex.ProblemInfo.Title} => {string.Join(", ", ex.ProblemInfo.Errors)}";
         }
     }
 }

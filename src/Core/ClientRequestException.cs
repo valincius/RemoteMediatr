@@ -9,8 +9,8 @@ public class ClientRequestException : Exception
         ProblemInfo = problemInfo;
     }
 
-    public ClientRequestException(string message, IEnumerable<string>? errors = null)
+    public ClientRequestException(string type, string message, IEnumerable<string>? errors = null)
     {
-        ProblemInfo = new ProblemInfo(message, errors ?? Enumerable.Empty<string>());
+        ProblemInfo = new ProblemInfo(type, message, errors ?? Enumerable.Empty<string>());
     }
 }
